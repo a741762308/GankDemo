@@ -1,0 +1,207 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
+    </style>
+    <!--blueTheme-->
+    <style name="BlueTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorBluePrimary</item>
+        <item name="colorPrimaryDark">@color/colorBluePrimaryDark</item>
+        <item name="colorAccent">@color/colorBluePrimaryDark</item>
+        <item name="md_title_color">@color/colorBluePrimary</item>
+        <item name="md_link_color">@color/colorBluePrimary</item>
+        <item name="md_positive_color">@color/colorBluePrimary</item>
+
+    </style>
+    0
+    <!--redTheme-->
+    <style name="RedTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorRedPrimary</item>
+        <item name="colorPrimaryDark">@color/colorRedPrimaryDark</item>
+        <item name="colorAccent">@color/colorRedPrimaryDark</item>
+        <item name="md_title_color">@color/colorRedPrimary</item>
+        <item name="md_link_color">@color/colorRedPrimary</item>
+        <item name="md_positive_color">@color/colorRedPrimary</item>
+
+    </style>
+    <!--brownTheme-->
+    <style name="BrownTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorBrownPrimary</item>
+        <item name="colorPrimaryDark">@color/colorBrownPrimaryDark</item>
+        <item name="colorAccent">@color/colorBrownPrimaryDark</item>
+        <item name="md_title_color">@color/colorBrownPrimary</item>
+        <item name="md_link_color">@color/colorBrownPrimary</item>
+        <item name="md_positive_color">@color/colorBrownPrimary</item>
+
+    </style>
+    <!--greenTheme-->
+    <style name="GreenTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorGreenPrimary</item>
+        <item name="colorPrimaryDark">@color/colorGreenPrimaryDark</item>
+        <item name="colorAccent">@color/colorGreenPrimaryDark</item>
+        <item name="md_title_color">@color/colorGreenPrimary</item>
+        <item name="md_link_color">@color/colorGreenPrimary</item>
+        <item name="md_positive_color">@color/colorGreenPrimary</item>
+    </style>
+    <!--purpleTheme-->
+    <style name="PurpleTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPurplePrimary</item>
+        <item name="colorPrimaryDark">@color/colorPurplePrimaryDark</item>
+        <item name="colorAccent">@color/colorPurplePrimaryDark</item>
+        <item name="md_title_color">@color/colorPurplePrimary</item>
+        <item name="md_link_color">@color/colorPurplePrimary</item>
+        <item name="md_positive_color">@color/colorPurplePrimary</item>
+    </style>
+    <!--tealTheme-->
+    <style name="TealTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorTealPrimary</item>
+        <item name="colorPrimaryDark">@color/colorTealPrimaryDark</item>
+        <item name="colorAccent">@color/colorTealPrimaryDark</item>
+        <item name="md_title_color">@color/colorTealPrimary</item>
+        <item name="md_link_color">@color/colorTealPrimary</item>
+        <item name="md_positive_color">@color/colorTealPrimary</item>
+    </style>
+
+    <!--pinkTheme-->
+    <style name="PinkTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPinkPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPinkPrimaryDark</item>
+        <item name="colorAccent">@color/colorPinkPrimaryDark</item>
+        <item name="md_title_color">@color/colorPinkPrimary</item>
+        <item name="md_link_color">@color/colorPinkPrimary</item>
+        <item name="md_positive_color">@color/colorPinkPrimary</item>
+    </style>
+
+    <!--deepPurpleTheme-->
+    <style name="DeepPurpleTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorDeepPurplePrimary</item>
+        <item name="colorPrimaryDark">@color/colorDeepPurplePrimaryDark</item>
+        <item name="colorAccent">@color/colorDeepPurplePrimaryDark</item>
+        <item name="md_title_color">@color/colorDeepPurplePrimary</item>
+        <item name="md_link_color">@color/colorDeepPurplePrimary</item>
+        <item name="md_positive_color">@color/colorDeepPurplePrimary</item>
+    </style>
+
+    <!--orange-->
+    <style name="OrangeTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorOrangePrimary</item>
+        <item name="colorPrimaryDark">@color/colorOrangePrimaryDark</item>
+        <item name="colorAccent">@color/colorOrangePrimaryDark</item>
+        <item name="md_title_color">@color/colorOrangePrimary</item>
+        <item name="md_link_color">@color/colorOrangePrimary</item>
+        <item name="md_positive_color">@color/colorOrangePrimary</item>
+    </style>
+
+
+    <!--indigo-->
+    <style name="IndigoTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorIndigoPrimary</item>
+        <item name="colorPrimaryDark">@color/colorIndigoPrimaryDark</item>
+        <item name="colorAccent">@color/colorIndigoPrimaryDark</item>
+        <item name="md_title_color">@color/colorIndigoPrimary</item>
+        <item name="md_link_color">@color/colorIndigoPrimary</item>
+        <item name="md_positive_color">@color/colorIndigoPrimary</item>
+    </style>
+
+
+    <!--cyan-->
+    <style name="CyanTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorCyanPrimary</item>
+        <item name="colorPrimaryDark">@color/colorCyanPrimaryDark</item>
+        <item name="colorAccent">@color/colorCyanPrimaryDark</item>
+        <item name="md_title_color">@color/colorCyanPrimary</item>
+        <item name="md_link_color">@color/colorCyanPrimary</item>
+        <item name="md_positive_color">@color/colorCyanPrimary</item>
+    </style>
+    <!--lightGreen-->
+    <style name="LightGreenTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorLightGreenPrimary</item>
+        <item name="colorPrimaryDark">@color/colorLightGreenPrimaryDark</item>
+        <item name="colorAccent">@color/colorLightGreenPrimaryDark</item>
+        <item name="md_title_color">@color/colorLightGreenPrimary</item>
+        <item name="md_link_color">@color/colorLightGreenPrimary</item>
+        <item name="md_positive_color">@color/colorLightGreenPrimary</item>
+    </style>
+
+
+    <!--lime-->
+    <style name="LimeTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorLimePrimary</item>
+        <item name="colorPrimaryDark">@color/colorLimePrimaryDark</item>
+        <item name="colorAccent">@color/colorLimePrimaryDark</item>
+        <item name="md_title_color">@color/colorLimePrimary</item>
+        <item name="md_link_color">@color/colorLimePrimary</item>
+        <item name="md_positive_color">@color/colorLimePrimary</item>
+    </style>
+
+
+    <!--deepOrange-->
+    <style name="DeepOrangeTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorDeepOrangePrimary</item>
+        <item name="colorPrimaryDark">@color/colorDeepOrangePrimaryDark</item>
+        <item name="colorAccent">@color/colorDeepOrangePrimaryDark</item>
+        <item name="md_title_color">@color/colorDeepOrangePrimary</item>
+        <item name="md_link_color">@color/colorDeepOrangePrimary</item>
+        <item name="md_positive_color">@color/colorDeepOrangePrimary</item>
+    </style>
+
+
+    <!--blueGrey-->
+    <style name="BlueGreyTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorBlueGreyPrimary</item>
+        <item name="colorPrimaryDark">@color/colorBlueGreyPrimaryDark</item>
+        <item name="colorAccent">@color/colorBlueGreyPrimaryDark</item>
+        <item name="md_title_color">@color/colorBlueGreyPrimary</item>
+        <item name="md_link_color">@color/colorBlueGreyPrimary</item>
+        <item name="md_positive_color">@color/colorBlueGreyPrimary</item>
+    </style>
+
+    <!--night-->
+    <style name="NightTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorNightPrimary</item>
+        <item name="colorPrimaryDark">@color/colorNightPrimaryDark</item>
+        <item name="colorAccent">@color/colorNightAccent</item>
+        <item name="md_title_color">@color/colorNightPrimary</item>
+        <item name="md_link_color">@color/colorNightPrimary</item>
+        <item name="md_positive_color">@color/colorNightPrimary</item>
+    </style>
+
+    <style name="TabLayout.TextAppearance" parent="@style/TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="AppTheme.Translucent" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="AppTheme.Menu" parent="AppTheme">
+        <item name="android:actionMenuTextAppearance">@style/MenuTextStyle</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+    </style>
+
+    <style name="MenuTextStyle">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="OverflowMenuStyle" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <!-- 是否覆盖锚点，默认为true，即盖住Toolbar -->
+        <item name="overlapAnchor">false</item>
+        <!-- 弹出层背景颜色 -->
+        <item name="android:popupBackground">@color/colorPrimary</item>
+        <!-- 弹出层垂直方向上的偏移，即在竖直方向上距离Toolbar的距离，值为负则会盖住Toolbar -->
+        <item name="android:dropDownVerticalOffset">5dp</item>
+        <!-- 弹出层水平方向上的偏移，即距离屏幕左边的距离，负值会导致右边出现空隙 -->
+        <item name="android:dropDownHorizontalOffset">0dp</item>
+    </style>
+</resources>

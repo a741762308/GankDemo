@@ -1,0 +1,93 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        release {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+            storeFile file(properties.getProperty("RELEASE_STORE_FILE"))
+            storePassword properties.getProperty("RELEASE_STORE_PASSWORD", "")
+            keyAlias properties.getProperty("RELEASE_KEY_ALIA", "")
+            keyPassword properties.get("RELEASE_KEY_PASSWORD", "")
+        }
+    }
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+    defaultConfig {
+        applicationId "com.jsqix.dongqing.gank"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile;
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        File outputDirectory = new File(outputFile.parent);
+                        def fileName
+                        if (variant.buildType.name == "release") {
+                            fileName = "app_v${defaultConfig.versionName}_release_${packageTime()}_${variant.productFlavors[0].name}.apk"
+                        } else {
+                            fileName = "app_v${defaultConfig.versionName}_debug.apk"
+                        }
+                        output.outputFile = new File(outputDirectory, fileName)
+                    }
+                }
+            }
+        }
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+    productFlavors {
+        tencent {}
+        qh360 {}
+        baidu {}
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+}
+
+def packageTime() {
+    return new Date().format("yyyyMMdd.HHmm", TimeZone.getTimeZone("GMT+8"))
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:cardview-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.2.3'
+    compile 'com.zhy:base-rvadapter:3.0.3'
+    compile 'com.zhy:base-adapter:3.0.3'
+    compile 'com.jsqix.utils:utils:1.0.8.2'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'me.drakeet.multitype:multitype:2.3.0'
+    compile 'com.github.chrisbanes:PhotoView:1.3.1'
+    compile 'com.lcodecorex:tkrefreshlayout:1.0.4'
+    compile 'com.afollestad.material-dialogs:commons:0.9.1.0'
+    compile 'com.mikepenz:iconics-core:2.8.1@aar'
+    compile 'com.mikepenz:material-design-iconic-typeface:2.2.0.2@aar'
+    compile 'com.melnykov:floatingactionbutton:1.3.0'
+    compile 'com.github.hotchemi:permissionsdispatcher:2.2.1'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.2.1'
+    compile project(':MyModule:sharemodule')
+}
