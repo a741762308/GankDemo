@@ -112,14 +112,14 @@ public class PhotoViewActivity extends BaseActivity implements View.OnClickListe
                     @Override
                     public String call(ResponseBody responseBody) {
                         String path = Environment.getExternalStorageDirectory().getPath() + "/" + FrameApplication.getInstance().getPackageName() + "/down";
-                        File file = new File(path);
-                        if (!file.exists()) {
-                            file.mkdir();
+                        File picFileDir = new File(path);
+                        if (!picFileDir.exists()) {
+                            picFileDir.mkdirs();
                         }
                         String name = url.substring(url.lastIndexOf("/") + 1);
                         try {
-                            file = new File(path, name);
-                            FileOutputStream fos = new FileOutputStream(file);
+                            File picFile = new File(picFileDir, name);
+                            FileOutputStream fos = new FileOutputStream(picFile);
                             fos.write(responseBody.bytes());
                             fos.flush();
                             fos.close();
