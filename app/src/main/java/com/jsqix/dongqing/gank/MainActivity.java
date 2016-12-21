@@ -194,6 +194,8 @@ public class MainActivity extends BaseAty
             downUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=" + getPackageName();
         } else if ("qh360".equals(BuildConfig.FLAVOR)) {
             downUrl = "http://openbox.mobilem.360.cn/qcms/view/t/detail?sid=3598872";
+        }else if("baidu".equals(BuildConfig.FLAVOR)){
+            downUrl = "http://mobile.baidu.com/item?docid=10617876";
         }
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
