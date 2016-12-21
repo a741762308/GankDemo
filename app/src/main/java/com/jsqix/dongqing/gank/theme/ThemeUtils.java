@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 
-import com.jsqix.utils.ACache;
-import com.jsqix.utils.StringUtils;
+import com.jsqix.dongqing.gank.utils.ACache;
+import com.jsqix.dongqing.gank.utils.StringUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

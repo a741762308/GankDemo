@@ -15,12 +15,12 @@ import android.webkit.WebViewClient;
 import android.widget.AbsoluteLayout.LayoutParams;
 import android.widget.ProgressBar;
 
-import com.jsqix.dongqing.gank.app.BaseAty;
-import com.jsqix.utils.Utils;
+import com.jsqix.dongqing.gank.app.BaseActivity;
+import com.jsqix.dongqing.gank.utils.Utils;
 
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
-public class WebViewActivity extends BaseAty {
+public class WebViewActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private WebView webview;

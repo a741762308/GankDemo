@@ -13,7 +13,7 @@ import com.jsqix.dongqing.gank.R;
 import com.jsqix.dongqing.gank.WebViewActivity;
 import com.jsqix.dongqing.gank.bean.GankData;
 import com.jsqix.dongqing.gank.bean.ImgDataBean;
-import com.jsqix.utils.DateUtil;
+import com.jsqix.dongqing.gank.utils.DateUtil;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 

@@ -9,7 +9,7 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.jsqix.utils.FrameApplication;
+import com.jsqix.dongqing.gank.app.MyApp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +103,7 @@ public class MarketUtils {
             if (!TextUtils.isEmpty(marketPkg))
                 intent.setPackage(marketPkg);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            FrameApplication.getInstance().startActivity(intent);
+            MyApp.getInstance().startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
         }

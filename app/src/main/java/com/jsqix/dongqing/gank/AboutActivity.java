@@ -13,9 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.jsqix.dongqing.gank.app.BaseAty;
+import com.jsqix.dongqing.gank.app.BaseActivity;
 
-public class AboutActivity extends BaseAty {
+public class AboutActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private CollapsingToolbarLayout toolbarLayout;

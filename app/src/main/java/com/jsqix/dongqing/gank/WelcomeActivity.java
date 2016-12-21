@@ -7,9 +7,9 @@ import android.os.Handler;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.jsqix.dongqing.gank.app.BaseActivity;
 import com.jsqix.dongqing.gank.theme.Theme;
 import com.jsqix.dongqing.gank.theme.ThemeUtils;
-import com.jsqix.utils.BaseActivity;
 
 
 public class WelcomeActivity extends BaseActivity {

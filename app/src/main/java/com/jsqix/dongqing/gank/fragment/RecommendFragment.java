@@ -9,7 +9,7 @@ import com.jsqix.dongqing.gank.adapter.recycler.RecyclerRecAdapter;
 import com.jsqix.dongqing.gank.api.Api;
 import com.jsqix.dongqing.gank.bean.GankData;
 import com.jsqix.dongqing.gank.bean.ImgDataBean;
-import com.jsqix.utils.ACache;
+import com.jsqix.dongqing.gank.utils.ACache;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 

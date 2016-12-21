@@ -29,7 +29,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.jsqix.dongqing.gank.adapter.TabFragmentAdapter;
-import com.jsqix.dongqing.gank.app.BaseAty;
+import com.jsqix.dongqing.gank.app.BaseActivity;
 import com.jsqix.dongqing.gank.app.MyApp;
 import com.jsqix.dongqing.gank.fragment.CommonFragment;
 import com.jsqix.dongqing.gank.fragment.FuliFragment;
@@ -37,14 +37,14 @@ import com.jsqix.dongqing.gank.fragment.RecommendFragment;
 import com.jsqix.dongqing.gank.theme.Theme;
 import com.jsqix.dongqing.gank.theme.ThemeUtils;
 import com.jsqix.dongqing.gank.utils.MarketUtils;
-import com.jsqix.utils.Utils;
+import com.jsqix.dongqing.gank.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
-public class MainActivity extends BaseAty
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, ColorChooserDialog.ColorCallback, View.OnClickListener {
     private long lastTime = 0;
     private TabLayout mTabLayout;

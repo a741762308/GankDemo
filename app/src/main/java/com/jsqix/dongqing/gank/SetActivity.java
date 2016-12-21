@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.jsqix.dongqing.gank.app.BaseAty;
+import com.jsqix.dongqing.gank.app.BaseActivity;
 import com.jsqix.dongqing.gank.utils.GlideCacheUtil;
-import com.jsqix.utils.Utils;
+import com.jsqix.dongqing.gank.utils.Utils;
 
-public class SetActivity extends BaseAty implements View.OnClickListener {
+public class SetActivity extends BaseActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
     private TextView tvFeedBack, tvClear;

@@ -14,9 +14,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.jsqix.dongqing.gank.api.Api;
-import com.jsqix.utils.BaseActivity;
-import com.jsqix.utils.FrameApplication;
-import com.jsqix.utils.Utils;
+import com.jsqix.dongqing.gank.app.BaseActivity;
+import com.jsqix.dongqing.gank.app.MyApp;
+import com.jsqix.dongqing.gank.utils.Utils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -111,7 +111,7 @@ public class PhotoViewActivity extends BaseActivity implements View.OnClickListe
                 .map(new Func1<ResponseBody, String>() {
                     @Override
                     public String call(ResponseBody responseBody) {
-                        String path = Environment.getExternalStorageDirectory().getPath() + "/" + FrameApplication.getInstance().getPackageName() + "/down";
+                        String path = Environment.getExternalStorageDirectory().getPath() + "/" + MyApp.getInstance().getPackageName() + "/down";
                         File picFileDir = new File(path);
                         if (!picFileDir.exists()) {
                             picFileDir.mkdirs();

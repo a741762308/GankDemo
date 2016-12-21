@@ -3,22 +3,27 @@ package com.jsqix.dongqing.gank.app;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.jsqix.dongqing.gank.R;
 import com.jsqix.dongqing.gank.theme.Theme;
 import com.jsqix.dongqing.gank.theme.ThemeUtils;
-import com.jsqix.utils.BaseActivity;
+import com.jsqix.dongqing.gank.utils.ACache;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 
 /**
  * Created by dongqing on 2016/12/14.
  */
 
-public class BaseAty extends BaseActivity {
+public class BaseActivity extends AppCompatActivity {
     public Activity mContext;
+    public ACache aCache;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApp.addToActivityList(this);
+        MyApp.setCrashHandler(this);
+        aCache = ACache.get(this);
         onPreCreate();
         mContext=this;
 
