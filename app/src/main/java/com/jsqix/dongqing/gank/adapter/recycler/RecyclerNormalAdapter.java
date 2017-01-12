@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.jsqix.dongqing.gank.R;
 import com.jsqix.dongqing.gank.WebViewActivity;
-import com.jsqix.dongqing.gank.bean.DataBean;
+import com.jsqix.dongqing.gank.bean.gank.DataBean;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 

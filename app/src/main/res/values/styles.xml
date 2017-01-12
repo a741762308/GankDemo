@@ -19,7 +19,6 @@
         <item name="md_positive_color">@color/colorBluePrimary</item>
 
     </style>
-    0
     <!--redTheme-->
     <style name="RedTheme" parent="AppTheme">
         <item name="colorPrimary">@color/colorRedPrimary</item>

@@ -7,9 +7,9 @@ import com.google.gson.Gson;
 import com.jsqix.dongqing.gank.R;
 import com.jsqix.dongqing.gank.adapter.recycler.RecyclerFuliAdapter;
 import com.jsqix.dongqing.gank.api.Api;
-import com.jsqix.dongqing.gank.bean.CategorylData;
-import com.jsqix.dongqing.gank.bean.DataBean;
-import com.jsqix.dongqing.gank.bean.ImgDataBean;
+import com.jsqix.dongqing.gank.bean.gank.CategorylData;
+import com.jsqix.dongqing.gank.bean.gank.DataBean;
+import com.jsqix.dongqing.gank.bean.gank.ImgDataBean;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
@@ -56,7 +56,7 @@ public class FuliFragment extends RefreshFragment {
     }
 
     private void getData() {
-        Api.getInstance().service.getCategoryData(categoryType, page)
+        Api.getInstance().GANK.service.getCategoryData(categoryType, page)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<CategorylData, List<ImgDataBean>>() {
                     @Override

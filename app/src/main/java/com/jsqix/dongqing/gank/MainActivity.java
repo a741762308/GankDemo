@@ -30,6 +30,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.jsqix.dongqing.gank.app.BaseActivity;
 import com.jsqix.dongqing.gank.app.MyApp;
+import com.jsqix.dongqing.gank.fragment.douban.DoubanFragment;
 import com.jsqix.dongqing.gank.fragment.HomeFragment;
 import com.jsqix.dongqing.gank.fragment.WebFragment;
 import com.jsqix.dongqing.gank.theme.Theme;
@@ -127,13 +128,16 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_home) {
             replace(new HomeFragment());
-        } else if (id == R.id.nav_gallery) {
+            getSupportActionBar().setTitle("干货首页");
+        } else if (id == R.id.nav_xiandu) {
             replace(new WebFragment());
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+            getSupportActionBar().setTitle("干货闲读");
+        } else if (id == R.id.nav_douban) {
+            replace(new DoubanFragment());
+            getSupportActionBar().setTitle("豆瓣电影");
+        } else if (id == R.id.nav_youku) {
 
         } else if (id == R.id.nav_share) {
             showShare();

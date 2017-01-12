@@ -1,4 +1,4 @@
-package com.jsqix.dongqing.gank.bean;
+package com.jsqix.dongqing.gank.bean.gank;
 
 import java.util.List;
 

@@ -106,7 +106,7 @@ public class PhotoViewActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void savePic2Dic(final String url) {
-        Api.getInstance().service.downloadPicFromNet(url)
+        Api.getInstance().GANK.service.downloadPicFromNet(url)
                 .subscribeOn(Schedulers.newThread())
                 .map(new Func1<ResponseBody, String>() {
                     @Override

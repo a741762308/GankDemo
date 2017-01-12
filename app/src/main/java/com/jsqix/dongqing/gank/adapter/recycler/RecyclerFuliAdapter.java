@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.jsqix.dongqing.gank.PhotoViewActivity;
 import com.jsqix.dongqing.gank.R;
-import com.jsqix.dongqing.gank.bean.DataBean;
+import com.jsqix.dongqing.gank.bean.gank.DataBean;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 

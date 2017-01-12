@@ -2,7 +2,7 @@ package com.jsqix.dongqing.gank.adapter.recycler.multi;
 
 import android.content.Context;
 
-import com.jsqix.dongqing.gank.bean.ImgDataBean;
+import com.jsqix.dongqing.gank.bean.gank.ImgDataBean;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 
 import java.util.List;

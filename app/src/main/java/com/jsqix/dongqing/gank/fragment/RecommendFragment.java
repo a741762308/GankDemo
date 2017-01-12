@@ -7,8 +7,8 @@ import com.google.gson.Gson;
 import com.jsqix.dongqing.gank.R;
 import com.jsqix.dongqing.gank.adapter.recycler.RecyclerRecAdapter;
 import com.jsqix.dongqing.gank.api.Api;
-import com.jsqix.dongqing.gank.bean.GankData;
-import com.jsqix.dongqing.gank.bean.ImgDataBean;
+import com.jsqix.dongqing.gank.bean.gank.GankData;
+import com.jsqix.dongqing.gank.bean.gank.ImgDataBean;
 import com.jsqix.dongqing.gank.utils.ACache;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -66,7 +66,7 @@ public class RecommendFragment extends RefreshFragment {
     private void getData(final Date date) {
         Calendar calender = Calendar.getInstance();
         calender.setTime(date);
-        Api.getInstance().service.getDayData(calender.get(Calendar.YEAR), calender.get(Calendar.MONTH) + 1, calender.get(Calendar.DAY_OF_MONTH))
+        Api.getInstance().GANK.service.getDayData(calender.get(Calendar.YEAR), calender.get(Calendar.MONTH) + 1, calender.get(Calendar.DAY_OF_MONTH))
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<GankData, GankData.ResultsBean>() {
                     @Override

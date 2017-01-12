@@ -1,4 +1,4 @@
-package com.jsqix.dongqing.gank.bean;
+package com.jsqix.dongqing.gank.bean.gank;
 
 /**
  * Created by dongqing on 2016/12/7.
