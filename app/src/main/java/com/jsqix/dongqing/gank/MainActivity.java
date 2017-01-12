@@ -1,5 +1,6 @@
 package com.jsqix.dongqing.gank;
 
+
 import android.animation.Animator;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,10 +12,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -28,27 +28,20 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
-import com.jsqix.dongqing.gank.adapter.TabFragmentAdapter;
 import com.jsqix.dongqing.gank.app.BaseActivity;
 import com.jsqix.dongqing.gank.app.MyApp;
-import com.jsqix.dongqing.gank.fragment.CommonFragment;
-import com.jsqix.dongqing.gank.fragment.FuliFragment;
-import com.jsqix.dongqing.gank.fragment.RecommendFragment;
+import com.jsqix.dongqing.gank.fragment.HomeFragment;
+import com.jsqix.dongqing.gank.fragment.WebFragment;
 import com.jsqix.dongqing.gank.theme.Theme;
 import com.jsqix.dongqing.gank.theme.ThemeUtils;
 import com.jsqix.dongqing.gank.utils.MarketUtils;
 import com.jsqix.dongqing.gank.utils.Utils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, ColorChooserDialog.ColorCallback, View.OnClickListener {
     private long lastTime = 0;
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
     private DrawerLayout drawer;
 
     @Override
@@ -78,7 +71,7 @@ public class MainActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        initViewPage();
+        replace(new HomeFragment());
         initClick();
     }
 
@@ -89,38 +82,6 @@ public class MainActivity extends BaseActivity
         theme.setOnClickListener(this);
     }
 
-    private void initViewPage() {
-        mTabLayout = (TabLayout) findViewById(R.id.tabs);
-        mViewPager = (ViewPager) findViewById(R.id.view_page);
-        List<String> titles = new ArrayList<>();
-        titles.add("推荐");
-        titles.add("Android");
-        titles.add("iOS");
-        titles.add("福利");
-        titles.add("前端");
-        titles.add("休息视频");
-        titles.add("拓展资源");
-        titles.add("App");
-        titles.add("瞎推荐");
-        List<Fragment> fragments = new ArrayList<>();
-        for (int i = 0; i < titles.size(); i++) {
-            Fragment fragment;
-            if (titles.get(i).equals("推荐")) {
-                fragment = new RecommendFragment();
-            } else if (titles.get(i).equals("福利")) {
-                fragment = new FuliFragment();
-            } else {
-                fragment = new CommonFragment();
-            }
-            Bundle bundle = new Bundle();
-            bundle.putString("type", titles.get(i));
-            fragment.setArguments(bundle);
-            fragments.add(fragment);
-        }
-        TabFragmentAdapter adapter = new TabFragmentAdapter(getSupportFragmentManager(), fragments, titles);
-        mViewPager.setAdapter(adapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-    }
 
     @Override
     public void onBackPressed() {
@@ -167,9 +128,9 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            replace(new HomeFragment());
         } else if (id == R.id.nav_gallery) {
-
+            replace(new WebFragment());
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -184,6 +145,11 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
+    private void replace(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, fragment).addToBackStack(null).commit();
+    }
+
 
     /**
      * 分享
@@ -194,7 +160,7 @@ public class MainActivity extends BaseActivity
             downUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=" + getPackageName();
         } else if ("qh360".equals(BuildConfig.FLAVOR)) {
             downUrl = "http://openbox.mobilem.360.cn/qcms/view/t/detail?sid=3598872";
-        }else if("baidu".equals(BuildConfig.FLAVOR)){
+        } else if ("baidu".equals(BuildConfig.FLAVOR)) {
             downUrl = "http://mobile.baidu.com/item?docid=10617876";
         }
         OnekeyShare oks = new OnekeyShare();

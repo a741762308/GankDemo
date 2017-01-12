@@ -26,7 +26,7 @@ import rx.schedulers.Schedulers;
  * 福利妹纸
  */
 
-public class FuliFragment extends BaseFragment {
+public class FuliFragment extends RefreshFragment {
     private RecyclerFuliAdapter adapter;
     private List<DataBean> data = new ArrayList<>();
 

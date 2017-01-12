@@ -26,7 +26,7 @@ import rx.schedulers.Schedulers;
  * Created by dongqing on 2016/12/8.
  * 通用分类数据
  */
-public class CommonFragment extends BaseFragment {
+public class CommonFragment extends RefreshFragment {
     private RecyclerNormalAdapter adapter;
     private List<DataBean> data = new ArrayList<>();
 

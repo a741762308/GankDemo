@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_webview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    tools:context="com.jsqix.dongqing.gank.WebViewActivity">
+    tools:context=".WebViewActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@id/app_bar"
@@ -18,9 +16,17 @@
         <include layout="@layout/toor_bar" />
     </android.support.design.widget.AppBarLayout>
 
-    <WebView
-        android:id="@+id/webview"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/ns_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-</LinearLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
+

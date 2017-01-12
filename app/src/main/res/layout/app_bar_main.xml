@@ -4,27 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f0f0f0"
     android:fitsSystemWindows="true"
-    tools:context="com.jsqix.dongqing.gank.MainActivity">
+    tools:context=".MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        app:elevation="0dp">
 
         <include layout="@layout/toor_bar" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/material_red"
-            app:tabMode="scrollable"
-            app:tabTextAppearance="@style/TabLayout.TextAppearance" />
-
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -32,8 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:fabSize="mini"
         app:backgroundTint="?attr/colorPrimary"
+        app:fabSize="mini"
         app:layout_behavior="com.jsqix.dongqing.gank.behavior.ScrollAwareFABBehavior"
         app:srcCompat="@mipmap/gank" />
 

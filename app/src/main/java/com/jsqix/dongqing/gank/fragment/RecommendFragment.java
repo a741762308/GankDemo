@@ -28,7 +28,7 @@ import rx.schedulers.Schedulers;
  * 每日数据
  */
 
-public class RecommendFragment extends BaseFragment {
+public class RecommendFragment extends RefreshFragment {
     private RecyclerRecAdapter adapter;
     private List<GankData.ResultsBean> data = new ArrayList<>();
 
