@@ -42,10 +42,10 @@ public class CommonFragment extends RefreshFragment {
         adapter = new RecyclerNormalAdapter(mContext, R.layout.item_recycler_normal, data);
         recyclerView.setAdapter(adapter);
 
-        refreshLayout.setOnRefreshListener(new RefreshListenerAdapter(){
+        refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-               page=1;
+                page = 1;
                 getData();
             }
 
@@ -75,7 +75,7 @@ public class CommonFragment extends RefreshFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.v("failure:", "onError");
+                        Log.v("failure:", e.toString());
                         refreshLayout.finishRefreshing();
                         refreshLayout.finishLoadmore();
                     }
@@ -86,7 +86,7 @@ public class CommonFragment extends RefreshFragment {
                         if (page == 1) {
                             data.clear();
                             refreshLayout.finishRefreshing();
-                        }else {
+                        } else {
                             refreshLayout.finishLoadmore();
                         }
                         data.addAll(imgDataBeen);

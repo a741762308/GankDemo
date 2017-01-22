@@ -1,1 +1,1 @@
-include ':app', ':MyModule:sharemodule'
+include ':app', ':MyModule:sharemodule', ':MyModule:YoukuPlayerOpenSDK'

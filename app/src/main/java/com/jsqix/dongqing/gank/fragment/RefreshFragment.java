@@ -31,6 +31,7 @@ public abstract class RefreshFragment extends BaseFragment {
         headerView.setColorSchemeColors(getResources().getIntArray(R.array.material_colors));
         refreshLayout.setHeaderView(headerView);
         refreshLayout.startRefresh();
+        refreshLayout.setOverScrollBottomShow(false);
         if (getArguments() != null) {
             categoryType = getArguments().getString("type", "all");
         }

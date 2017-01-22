@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GankDemo.iml" filepath="$PROJECT_DIR$/GankDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyModule/MyModule.iml" filepath="$PROJECT_DIR$/MyModule/MyModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyModule/YoukuPlayerOpenSDK/YoukuPlayerOpenSDK.iml" filepath="$PROJECT_DIR$/MyModule/YoukuPlayerOpenSDK/YoukuPlayerOpenSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyModule/sharemodule/sharemodule.iml" filepath="$PROJECT_DIR$/MyModule/sharemodule/sharemodule.iml" />
     </modules>

@@ -47,7 +47,6 @@ public class RecommendFragment extends RefreshFragment {
         recyclerView.setAdapter(adapter);
 
         refreshLayout.setEnableLoadmore(false);
-        refreshLayout.setOverScrollBottomShow(false);
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
@@ -92,7 +91,7 @@ public class RecommendFragment extends RefreshFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.v("failure:", "onError");
+                        Log.v("failure:", e.toString());
                         refreshLayout.finishRefreshing();
                         refreshLayout.finishLoadmore();
                     }

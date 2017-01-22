@@ -1,12 +1,15 @@
 package com.jsqix.dongqing.gank;
 
 
+import android.Manifest;
 import android.animation.Animator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -18,32 +21,72 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationClientOption.AMapLocationMode;
+import com.amap.api.location.AMapLocationListener;
+import com.google.gson.Gson;
+import com.jsqix.dongqing.gank.api.Api;
 import com.jsqix.dongqing.gank.app.BaseActivity;
 import com.jsqix.dongqing.gank.app.MyApp;
-import com.jsqix.dongqing.gank.fragment.douban.DoubanFragment;
+import com.jsqix.dongqing.gank.bean.weather.DailyWeather;
+import com.jsqix.dongqing.gank.bean.weather.NowWeather;
 import com.jsqix.dongqing.gank.fragment.HomeFragment;
 import com.jsqix.dongqing.gank.fragment.WebFragment;
+import com.jsqix.dongqing.gank.fragment.douban.DoubanFragment;
+import com.jsqix.dongqing.gank.fragment.youku.YoukuFragment;
 import com.jsqix.dongqing.gank.theme.Theme;
 import com.jsqix.dongqing.gank.theme.ThemeUtils;
+import com.jsqix.dongqing.gank.utils.DateUtil;
 import com.jsqix.dongqing.gank.utils.MarketUtils;
+import com.jsqix.dongqing.gank.utils.StringUtils;
 import com.jsqix.dongqing.gank.utils.Utils;
 
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
+@RuntimePermissions
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, ColorChooserDialog.ColorCallback, View.OnClickListener {
     private long lastTime = 0;
     private DrawerLayout drawer;
+    private FloatingActionButton floatingActionButton;
+    private TextView locateCity;
+    private AMapLocationClient mLocationClient;
+    public AMapLocationClientOption mLocationOption;
+
+    private int[] icons_weather = new int[]{R.mipmap.weather_0, R.mipmap.weather_1, R.mipmap.weather_2,
+            R.mipmap.weather_3, R.mipmap.weather_4, R.mipmap.weather_5, R.mipmap.weather_6, R.mipmap.weather_7,
+            R.mipmap.weather_8, R.mipmap.weather_9, R.mipmap.weather_10, R.mipmap.weather_11, R.mipmap.weather_12,
+            R.mipmap.weather_13, R.mipmap.weather_14, R.mipmap.weather_15, R.mipmap.weather_16, R.mipmap.weather_17,
+            R.mipmap.weather_18, R.mipmap.weather_19, R.mipmap.weather_20, R.mipmap.weather_21, R.mipmap.weather_22,
+            R.mipmap.weather_23, R.mipmap.weather_24, R.mipmap.weather_25, R.mipmap.weather_26, R.mipmap.weather_27,
+            R.mipmap.weather_28, R.mipmap.weather_29, R.mipmap.weather_30, R.mipmap.weather_31, R.mipmap.weather_32,
+            R.mipmap.weather_33, R.mipmap.weather_34, R.mipmap.weather_35, R.mipmap.weather_36, R.mipmap.weather_37,
+            R.mipmap.weather_38, R.mipmap.weather_99};
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +98,7 @@ public class MainActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -70,10 +106,117 @@ public class MainActivity extends BaseActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        locateCity = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_city);
+
         replace(new HomeFragment());
         initClick();
+        if (!StringUtils.isEmpty(aCache.getAsString("city"))) {
+            getWeather();
+            locateCity.setText(aCache.getAsString("city"));
+        }
+        MainActivityPermissionsDispatcher.onAllowWithCheck(this);
+    }
+
+    private void initLocate() {
+        mLocationOption = new AMapLocationClientOption();
+        mLocationOption.setLocationMode(AMapLocationMode.Hight_Accuracy);
+        mLocationOption.setInterval(10*60*1000);
+        mLocationClient = new AMapLocationClient(mContext);
+        mLocationClient.setLocationOption(mLocationOption);
+        mLocationClient.startLocation();
+        mLocationClient.setLocationListener(new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation aMapLocation) {
+//                Log.v("locate:", new Gson().toJson(aMapLocation));
+                if (aMapLocation != null) {
+                    if (aMapLocation.getErrorCode() == 0) {
+                        aCache.put("city", aMapLocation.getCity());
+                        getWeather();
+                        locateCity.setText(aMapLocation.getCity());
+                    } else {
+                        Log.e("AmapError", "location Error, ErrCode:"
+                                + aMapLocation.getErrorCode() + ", errInfo:"
+                                + aMapLocation.getErrorInfo());
+                    }
+                }
+            }
+        });
+    }
+
+    private void getWeather() {
+//        getNowWeather();
+        getDailyWeather();
+
+    }
+
+    private void getDailyWeather() {
+        Api.getInstance().WEATHER.service.getDailyWeather("hx5bcn1nsnrwv3yp", aCache.getAsString("city"), 0, 1)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<DailyWeather, DailyWeather.ResultsBean>() {
+                    @Override
+                    public DailyWeather.ResultsBean call(DailyWeather dailyWeather) {
+                        return dailyWeather.getResults().get(0);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DailyWeather.ResultsBean>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.v("success:", "onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.v("failure:", e.toString());
+                    }
+
+                    @Override
+                    public void onNext(DailyWeather.ResultsBean resultsBean) {
+                        Log.v("result:", new Gson().toJson(resultsBean));
+                        DailyWeather.ResultsBean.DailyBean daily = resultsBean.getDaily().get(0);
+                        ImageView iv = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.iv_weather);
+                        TextView w = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_weather);
+                        TextView t = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_temperature);
+                        if (DateUtil.getCurrentDateTimeStatus() == DateUtil.TIME.PM) {
+                            iv.setImageResource(icons_weather[StringUtils.toInt(daily.getCode_night())]);
+                            w.setText(daily.getText_night());
+                        } else {
+                            iv.setImageResource(icons_weather[StringUtils.toInt(daily.getCode_day())]);
+                            w.setText(daily.getText_day());
+                        }
+                        t.setText(daily.getLow() + "/" + daily.getHigh() + "°C");
+                    }
+                });
+    }
+
+    private void getNowWeather() {
+        Api.getInstance().WEATHER.service.getNowWeather("hx5bcn1nsnrwv3yp", aCache.getAsString("city"))
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<NowWeather, NowWeather.ResultsBean>() {
+                    @Override
+                    public NowWeather.ResultsBean call(NowWeather nowWeather) {
+                        return nowWeather.getResults().get(0);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<NowWeather.ResultsBean>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.v("success:", "onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.v("failure:", e.toString());
+                    }
+
+                    @Override
+                    public void onNext(NowWeather.ResultsBean resultsBean) {
+                        Log.v("result:", new Gson().toJson(resultsBean));
+                    }
+                });
     }
 
     private void initClick() {
@@ -92,7 +235,7 @@ public class MainActivity extends BaseActivity
         } else {
             long currentTick = System.currentTimeMillis();
             if (currentTick - lastTime > 1500) {
-                Utils.makeToast(this, "再按一次退出");
+                Snackbar.make(floatingActionButton, "再按一次退出程序", Snackbar.LENGTH_SHORT).show();
                 lastTime = currentTick;
             } else {
                 MyApp.getInstance().exitApp();
@@ -138,7 +281,8 @@ public class MainActivity extends BaseActivity
             replace(new DoubanFragment());
             getSupportActionBar().setTitle("豆瓣电影");
         } else if (id == R.id.nav_youku) {
-
+            replace(new YoukuFragment());
+            getSupportActionBar().setTitle("优酷首页");
         } else if (id == R.id.nav_share) {
             showShare();
         } else if (id == R.id.nav_send) {
@@ -348,4 +492,33 @@ public class MainActivity extends BaseActivity
     }
 
 
+    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void onAllow() {
+        initLocate();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
+
+    @OnShowRationale({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void requestPermission(final PermissionRequest request) {
+        request.proceed();
+    }
+
+    @OnPermissionDenied({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void onDeny() {
+        Utils.makeToast(this, "请授予定位权限");
+    }
+
+    @OnNeverAskAgain({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    void onAsk() {
+        Utils.makeToast(this, "请到应用详情页权限管理中授予权限！");
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivity(intent);
+    }
 }

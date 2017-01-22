@@ -1,16 +1,9 @@
 package com.jsqix.dongqing.gank.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.jsqix.dongqing.gank.R;
-import com.jsqix.dongqing.gank.adapter.TabFragmentAdapter;
+import com.jsqix.dongqing.gank.bean.HomeData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,25 +12,10 @@ import java.util.List;
  * Created by dongqing on 2017/1/10.
  */
 
-public class HomeFragment extends BaseFragment {
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home, container, false);
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
+public class HomeFragment extends BaseHomeActivity {
 
     @Override
-    protected void initView() {
-
-        initViewPage();
-    }
-    private void initViewPage() {
-        mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        mViewPager = (ViewPager) view.findViewById(R.id.view_page);
+    protected HomeData setUpViewPage() {
         List<String> titles = new ArrayList<>();
         titles.add("推荐");
         titles.add("Android");
@@ -63,9 +41,8 @@ public class HomeFragment extends BaseFragment {
             fragment.setArguments(bundle);
             fragments.add(fragment);
         }
-        TabFragmentAdapter adapter = new TabFragmentAdapter(getChildFragmentManager(), fragments, titles);
-        mViewPager.setAdapter(adapter);
-        mTabLayout.setupWithViewPager(mViewPager);
+        return new HomeData(titles, fragments);
     }
+
 
 }

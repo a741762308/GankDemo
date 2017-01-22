@@ -3,16 +3,17 @@ package com.jsqix.dongqing.gank;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AbsoluteLayout.LayoutParams;
 import android.widget.ProgressBar;
 
 import com.jsqix.dongqing.gank.app.BaseActivity;
@@ -39,18 +40,22 @@ public class WebViewActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         webview = (WebView) findViewById(R.id.webview);
-        progressbar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
-        progressbar.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 10, 0, 0));
-        progressbar.setProgressDrawable(getResources().getDrawable(R.drawable.progressbar_color));
-        webview.addView(progressbar);
+        progressbar = (ProgressBar) findViewById(R.id.progressbar);
         WebSettings settings = webview.getSettings();
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setJavaScriptEnabled(true);
+        settings.setSupportZoom(true);
+        settings.setBuiltInZoomControls(true);
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setAppCacheEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setUserAgentString("User-Agent: Mozilla/5.0 (Linux; Android 6.0.1; ZUK Z2131 Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043015 Safari/537.36 MicroMessenger/6.5.3.980 NetType/WIFI Language/zh_CN");
         webview.loadUrl(getIntent().getStringExtra("url"));
         webview.setWebChromeClient(new MyWebChrome());
         webview.setWebViewClient(new MyWebView());
     }
 
-    ;
 
     class MyWebChrome extends WebChromeClient {
         @Override
@@ -70,6 +75,7 @@ public class WebViewActivity extends BaseActivity {
             super.onReceivedTitle(view, title);
             toolbar.setTitle(title);
         }
+
     }
 
     class MyWebView extends WebViewClient {
@@ -78,6 +84,17 @@ public class WebViewActivity extends BaseActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return super.shouldOverrideUrlLoading(view, url);
+        }
+
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
+        }
+
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            handler.proceed();
+            super.onReceivedSslError(view, handler, error);
         }
     }
 
@@ -119,7 +136,7 @@ public class WebViewActivity extends BaseActivity {
         // text是分享文本，所有平台都需要这个字段
         oks.setText(getIntent().getStringExtra("name"));
         //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
-        oks.setImageUrl(aCache.getAsString("imgUrl"));
+        oks.setImageUrl(getIntent().getStringExtra("imgUrl") == null ? aCache.getAsString("imgUrl") : getIntent().getStringExtra("imgUrl"));
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 //        oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用

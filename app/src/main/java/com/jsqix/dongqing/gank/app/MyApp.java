@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import com.jsqix.dongqing.gank.utils.ACache;
 import com.jsqix.dongqing.gank.utils.ErrorHandler;
 import com.jsqix.dongqing.gank.utils.Utils;
+import com.youku.player.YoukuPlayerConfig;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -145,7 +146,13 @@ public class MyApp extends Application {
         super.onCreate();
         MyApp.mInstance = this;
         MyApp.crashHandler = ErrorHandler.getInstance();
+        MyApp.crashHandler.setDebug(false);
+        //分享 sdk
         ShareSDK.initSDK(this);
-    }
+        //优酷 sdk
+        YoukuPlayerConfig.setLog(true);
+        YoukuPlayerConfig.setClientIdAndSecret("b2a61f04339f47b1","1b4dcae75f393a1b67596bd6ad9bae37");
+        YoukuPlayerConfig.onInitial(getApplicationContext(), "");
 
+    }
 }

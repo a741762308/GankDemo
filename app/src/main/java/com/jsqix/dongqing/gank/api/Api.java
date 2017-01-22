@@ -15,7 +15,9 @@ public class Api {
 
     public static final String BASE_URL = "http://gank.io/api/";
     public static final String GNAK_URL = "http://gank.io/api/";
-    public static final String DOUBAN_URL = "http://api.douban.com/v2/movie/";
+    public static final String DOUBAN_URL = "http://api.douban.com/";
+    public static final String YOUKU_URL = "https://openapi.youku.com/";
+    public static final String WEATHER_URL = "https://api.thinkpage.cn/";
     public final static MediaType TYPE_IMAGE = MediaType.parse("image/*");
     public final static String UTF_8 = "UTF-8";
     public final static int PAGE_SIZE = 20;
@@ -26,6 +28,8 @@ public class Api {
 
     public static final Api GANK = new Api(GNAK_URL);
     public static final Api DOUBAN = new Api(DOUBAN_URL);
+    public static final Api YOUKU = new Api(YOUKU_URL);
+    public static final Api WEATHER = new Api(WEATHER_URL);
 
     public Api() {
     }

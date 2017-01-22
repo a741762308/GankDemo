@@ -73,7 +73,7 @@ public class FuliFragment extends RefreshFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.v("failure:", "onError");
+                        Log.v("failure:", e.toString());
                         refreshLayout.finishRefreshing();
                         refreshLayout.finishLoadmore();
                     }

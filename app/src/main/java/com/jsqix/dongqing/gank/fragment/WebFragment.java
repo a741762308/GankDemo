@@ -28,6 +28,7 @@ public class WebFragment extends BaseFragment {
         webview = (WebView) view.findViewById(R.id.webview);
         WebSettings settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
+        settings.setUseWideViewPort(true);
         webview.loadUrl("http://gank.io/xiandu");
         webview.setWebViewClient(new MyWebView());
     }

@@ -55,6 +55,19 @@ public class StringUtils {
         return toInt(obj.toString(), 0);
     }
 
+    public static String toNumber(String s) {
+        long l = toLong(s);
+        double a = l / 10000.0;
+        long b = l % 10000;
+        if (a > 10000) {
+            return toFormat(a / 10000) + "亿";
+        } else if (a < 1) {
+            return b + "";
+        } else {
+            return toFormat(a) + "万";
+        }
+    }
+
     public static boolean isNum(Object obj) {
         if (obj == null)
             return false;

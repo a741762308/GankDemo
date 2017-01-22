@@ -30,7 +30,6 @@ public class DoubanFilmFragment extends RefreshFragment {
     @Override
     protected void initView() {
         refreshLayout.setEnableLoadmore(false);
-        refreshLayout.setOverScrollBottomShow(false);
         GridLayoutManager manager = new GridLayoutManager(mContext, 2,GridLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(manager);
         adapter = new DoubanFilmAdapter(mContext, R.layout.item_recycler_douban_film, data);
@@ -70,7 +69,7 @@ public class DoubanFilmFragment extends RefreshFragment {
 
                     @Override
                     public void onNext(DoubanFilm doubanFilm) {
-                        Log.v("next:", new Gson().toJson(doubanFilm));
+                        Log.v("result:", new Gson().toJson(doubanFilm));
                         refreshLayout.finishRefreshing();
                         data.clear();
                         data.addAll(doubanFilm.getSubjects());
