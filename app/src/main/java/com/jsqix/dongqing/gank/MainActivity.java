@@ -78,6 +78,7 @@ public class MainActivity extends BaseActivity
     private TextView locateCity;
     private AMapLocationClient mLocationClient;
     public AMapLocationClientOption mLocationOption;
+    private Fragment currentFragment;
 
     private int[] icons_weather = new int[]{R.mipmap.weather_0, R.mipmap.weather_1, R.mipmap.weather_2,
             R.mipmap.weather_3, R.mipmap.weather_4, R.mipmap.weather_5, R.mipmap.weather_6, R.mipmap.weather_7,
@@ -300,15 +301,19 @@ public class MainActivity extends BaseActivity
         if (id == R.id.nav_home) {
             replace(new HomeFragment());
             getSupportActionBar().setTitle("干货首页");
+
         } else if (id == R.id.nav_xiandu) {
             replace(new WebFragment());
             getSupportActionBar().setTitle("干货闲读");
+
         } else if (id == R.id.nav_douban) {
             replace(new DoubanFragment());
             getSupportActionBar().setTitle("豆瓣电影");
+
         } else if (id == R.id.nav_youku) {
             replace(new YoukuFragment());
             getSupportActionBar().setTitle("优酷首页");
+
         } else if (id == R.id.nav_share) {
             showShare();
         } else if (id == R.id.nav_send) {
@@ -320,8 +325,20 @@ public class MainActivity extends BaseActivity
     }
 
     private void replace(Fragment fragment) {
+        if (currentFragment != null) {
+            if (currentFragment instanceof HomeFragment && fragment instanceof HomeFragment) {
+                return;
+            } else if (currentFragment instanceof WebFragment && fragment instanceof WebFragment) {
+                return;
+            } else if (currentFragment instanceof DoubanFragment && fragment instanceof DoubanFragment) {
+                return;
+            } else if (currentFragment instanceof YoukuFragment && fragment instanceof YoukuFragment) {
+                return;
+            }
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment, fragment).addToBackStack(null).commit();
+        currentFragment = fragment;
     }
 
 

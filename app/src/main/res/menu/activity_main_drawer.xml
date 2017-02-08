@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/group_normal"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:checked="true"
@@ -21,21 +23,19 @@
             android:title="优酷" />
     </group>
 
-    <item android:title="更多" >
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="分享" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="评价" />
-            <item
-                android:id="@+id/nav_upload"
-                android:icon="@drawable/ic_menu_upload"
-                android:title="上传" />
-        </menu>
-    </item>
+    <group android:id="@+id/group_more">
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="分享" />
+        <item
+            android:id="@+id/nav_send"
+            android:icon="@drawable/ic_menu_send"
+            android:title="评价" />
+        <item
+            android:id="@+id/nav_upload"
+            android:icon="@drawable/ic_menu_upload"
+            android:title="上传" />
+    </group>
 
 </menu>
