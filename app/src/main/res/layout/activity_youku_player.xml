@@ -8,36 +8,36 @@
     android:orientation="vertical"
     tools:context=".YoukuPlayerActivity">
 
-    <LinearLayout
-        android:id="@+id/play_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
+    <!--<LinearLayout-->
+    <!--android:id="@+id/play_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:visibility="gone">-->
 
-        <com.youku.player.base.YoukuPlayerView
-            android:id="@+id/playView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp" />
+    <!--<com.youku.player.base.YoukuPlayerView-->
+    <!--android:id="@+id/playView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="200dp" />-->
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
 
-            <com.zhy.view.flowlayout.TagFlowLayout
-                android:id="@+id/set_tag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:max_select="1" />
-        </ScrollView>
+    <!--<com.zhy.view.flowlayout.TagFlowLayout-->
+    <!--android:id="@+id/set_tag"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:max_select="1" />-->
+    <!--</ScrollView>-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/web_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <android.support.design.widget.AppBarLayout
             android:id="@id/app_bar"
@@ -48,6 +48,11 @@
             <include layout="@layout/toor_bar" />
         </android.support.design.widget.AppBarLayout>
 
+        <FrameLayout
+            android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
         <com.jsqix.dongqing.gank.view.NestedWebView
             android:id="@+id/webview"
@@ -63,7 +68,8 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/ad_bg_back"
             android:scaleType="centerInside"
-            android:src="@drawable/vertical_icon_back" />
+            android:src="@drawable/vertical_icon_back"
+            android:visibility="gone" />
     </android.support.design.widget.CoordinatorLayout>
 
 

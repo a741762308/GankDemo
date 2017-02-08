@@ -1,7 +1,6 @@
 package com.jsqix.dongqing.gank.app;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -9,7 +8,6 @@ import com.jsqix.dongqing.gank.R;
 import com.jsqix.dongqing.gank.theme.Theme;
 import com.jsqix.dongqing.gank.theme.ThemeUtils;
 import com.jsqix.dongqing.gank.utils.ACache;
-import com.mikepenz.iconics.context.IconicsContextWrapper;
 
 /**
  * Created by dongqing on 2016/12/14.
@@ -29,10 +27,10 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
-    }
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+//    }
 
     private void onPreCreate() {
         Theme theme = ThemeUtils.getCurrentTheme(this);

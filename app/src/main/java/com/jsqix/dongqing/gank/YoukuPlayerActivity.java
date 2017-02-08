@@ -8,41 +8,28 @@ import android.content.res.Configuration;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.OrientationEventListener;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.FrameLayout;
 
-import com.google.gson.Gson;
 import com.jsqix.dongqing.gank.api.Api;
 import com.jsqix.dongqing.gank.app.BaseActivity;
 import com.jsqix.dongqing.gank.bean.youku.YKProgramVideo;
 import com.jsqix.dongqing.gank.utils.Utils;
 import com.jsqix.dongqing.gank.utils.YoukuUtils;
 import com.jsqix.dongqing.gank.view.NestedWebView;
-import com.youku.player.VideoDefinition;
-import com.youku.player.base.PlayerErrorInfo;
-import com.youku.player.base.PlayerListener;
-import com.youku.player.base.YoukuPlayerView;
-import com.zhy.view.flowlayout.FlowLayout;
-import com.zhy.view.flowlayout.TagAdapter;
-import com.zhy.view.flowlayout.TagFlowLayout;
-import com.zhy.view.flowlayout.TagView;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeMap;
 
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -55,50 +42,62 @@ public class YoukuPlayerActivity extends BaseActivity {
     private PowerManager.WakeLock mWakeLock = null;
     private static final String POWER_LOCK = "YoukuPlayerActivity";
 
-    private LinearLayout LayoutPlayer;
-    private YoukuPlayerView playerView;
-    private TagFlowLayout setTag;
+//    private LinearLayout LayoutPlayer;
+//    private YoukuPlayerView playerView;
+//    private TagFlowLayout setTag;
 
-    private CoordinatorLayout layoutWeb;
+    //    private CoordinatorLayout layoutWeb;
     private Toolbar toolbar;
-    private NestedWebView webview;
-    private ImageView screenBack;
+    private NestedWebView webView;
+    private FrameLayout videoView;
+//    private ImageView screenBack;
 //    private ProgressBar progressbar;
+
+    private View xCustomView;
+    private WebChromeClient.CustomViewCallback xCustomViewCallback;
+
+    private OrientationEventListener mOrientationListener;
+    private boolean mScreenProtrait = true;
+    private boolean mCurrentOrient = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_youku_player);
         initView();
+        startOrientationChangeListener();
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
     private void initView() {
-        LayoutPlayer = (LinearLayout) findViewById(R.id.play_layout);
+//        LayoutPlayer = (LinearLayout) findViewById(R.id.play_layout);
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, POWER_LOCK);
-        playerView = (YoukuPlayerView) findViewById(R.id.playView);
-        playerView.attachActivity(this);
-        playerView.setPreferVideoDefinition(VideoDefinition.VIDEO_HD);
-        playerView.setPlayerListener(new MyPlayerListener());
-        setTag = (TagFlowLayout) findViewById(R.id.set_tag);
-        getVideoProgram();
+//        playerView = (YoukuPlayerView) findViewById(R.id.playView);
+//        playerView.attachActivity(this);
+//        playerView.setPreferVideoDefinition(VideoDefinition.VIDEO_HD);
+//        playerView.setPlayerListener(new MyPlayerListener());
+//        setTag = (TagFlowLayout) findViewById(R.id.set_tag);
+//        getVideoProgram();
 
-        layoutWeb = (CoordinatorLayout) findViewById(R.id.web_layout);
+//        layoutWeb = (CoordinatorLayout) findViewById(R.id.web_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        screenBack= (ImageView) findViewById(R.id.screen_back);
-        screenBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-        });
-        webview = (NestedWebView) findViewById(R.id.webview);
+//        screenBack = (ImageView) findViewById(R.id.screen_back);
+//        screenBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//            }
+//        });
+        videoView= (FrameLayout) findViewById(R.id.video_view);
+        webView = (NestedWebView) findViewById(R.id.webview);
 //        progressbar = (ProgressBar) findViewById(progressbar);
-        WebSettings settings = webview.getSettings();
+        WebSettings settings = webView.getSettings();
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setJavaScriptEnabled(true);
         settings.setUseWideViewPort(true);
@@ -107,9 +106,9 @@ public class YoukuPlayerActivity extends BaseActivity {
         settings.setDomStorageEnabled(true);
         settings.setSupportMultipleWindows(true);
         settings.setUserAgentString("User-Agent: Mozilla/5.0 (Linux; Android 7.0; ZUK Z2131 Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043015 Safari/537.36 MicroMessenger/6.5.3.980 NetType/WIFI Language/zh_CN");
-        webview.loadUrl(getIntent().getStringExtra("url"));
-        webview.setWebChromeClient(new MyWebChrome());
-        webview.setWebViewClient(new MyWebView());
+        webView.loadUrl(getIntent().getStringExtra("url"));
+        webView.setWebChromeClient(new MyWebChrome());
+        webView.setWebViewClient(new MyWebView());
     }
 
 
@@ -147,7 +146,7 @@ public class YoukuPlayerActivity extends BaseActivity {
 
                     @Override
                     public void onNext(List<YKProgramVideo.ResultsBean> resultsBeen) {
-                        Log.v("result:", new Gson().toJson(resultsBeen));
+                        /*Log.v("result:", new Gson().toJson(resultsBeen));
                         layoutWeb.setVisibility(View.GONE);
                         LayoutPlayer.setVisibility(View.VISIBLE);
                         if (resultsBeen != null && resultsBeen.size() > 1) {
@@ -179,14 +178,14 @@ public class YoukuPlayerActivity extends BaseActivity {
                             });
                         } else {
                             playerView.playYoukuVideo(resultsBeen.get(0).getVideoid());
-                        }
+                        }*/
 
                     }
                 });
     }
 
     // 添加播放器的监听器
-    private class MyPlayerListener extends PlayerListener {
+   /* private class MyPlayerListener extends PlayerListener {
         @Override
         public void onComplete() {
             // TODO Auto-generated method stub
@@ -219,12 +218,12 @@ public class YoukuPlayerActivity extends BaseActivity {
         public void onPrepared() {
             super.onPrepared();
         }
-    }
+    }*/
 
     @Override
     protected void onPause() {
         super.onPause();
-        playerView.onPause();
+//        playerView.onPause();
         if (mWakeLock != null) {
             mWakeLock.release();
         }
@@ -233,7 +232,7 @@ public class YoukuPlayerActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        playerView.onResume();
+//        playerView.onResume();
         if (null != mWakeLock && (!mWakeLock.isHeld())) {
             mWakeLock.acquire();
         }
@@ -242,21 +241,58 @@ public class YoukuPlayerActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        playerView.onDestroy();
+//        playerView.onDestroy();
+    }
+
+    private final void startOrientationChangeListener() {
+        mOrientationListener = new OrientationEventListener(this) {
+            @Override
+            public void onOrientationChanged(int rotation) {
+                if (((rotation >= 0) && (rotation <= 45)) || (rotation >= 315) || ((rotation >= 135) && (rotation <= 225))) {//portrait
+                    mCurrentOrient = true;
+                    if (mCurrentOrient != mScreenProtrait) {
+                        mScreenProtrait = mCurrentOrient;
+                        orientationChanged(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    }
+                } else if (((rotation > 45) && (rotation < 135)) || ((rotation > 225) && (rotation < 315))) {//landscape
+                    mCurrentOrient = false;
+                    if (mCurrentOrient != mScreenProtrait) {
+                        mScreenProtrait = mCurrentOrient;
+                        orientationChanged(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    }
+                }
+            }
+        };
+        mOrientationListener.enable();
+    }
+
+    private void orientationChanged(int screenOrientationPortrait) {
+        setRequestedOrientation(screenOrientationPortrait);
+//        if (screenOrientationPortrait == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+//            toolbar.setVisibility(View.VISIBLE);
+//            screenBack.setVisibility(View.GONE);
+//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        } else {
+//            toolbar.setVisibility(View.GONE);
+//            screenBack.setVisibility(View.VISIBLE);
+//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        }
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (layoutWeb.getVisibility() == View.VISIBLE) {
-            if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                toolbar.setVisibility(View.VISIBLE);
-                screenBack.setVisibility(View.GONE);
-            } else {
-                toolbar.setVisibility(View.GONE);
-                screenBack.setVisibility(View.VISIBLE);
-            }
+//        if (layoutWeb.getVisibility() == View.VISIBLE) {
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            toolbar.setVisibility(View.VISIBLE);
+//            screenBack.setVisibility(View.GONE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            toolbar.setVisibility(View.GONE);
+//            screenBack.setVisibility(View.VISIBLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
+//        }
     }
 
     class MyWebChrome extends WebChromeClient {
@@ -271,6 +307,32 @@ public class YoukuPlayerActivity extends BaseActivity {
 //            }
             super.onProgressChanged(view, newProgress);
         }
+//        @Override
+//        public void onShowCustomView(View view, CustomViewCallback callback) {
+//            if (xCustomView != null) {
+//                callback.onCustomViewHidden();
+//                return;
+//            }
+//            videoView.addView(view);
+//            xCustomView = view;
+//            xCustomViewCallback = callback;
+//            webView.setVisibility(View.GONE);
+//            videoView.setVisibility(View.VISIBLE);
+////            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }
+
+//        @Override
+//        public void onHideCustomView() {
+//            if (xCustomView == null)//不是全屏播放状态
+//                return;
+//            xCustomView.setVisibility(View.GONE);
+//            videoView.removeView(xCustomView);
+//            xCustomView = null;
+//            videoView.setVisibility(View.GONE);
+//            xCustomViewCallback.onCustomViewHidden();
+//            webView.setVisibility(View.VISIBLE);
+////            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
 
         @Override
         public void onReceivedTitle(WebView view, String title) {
@@ -298,6 +360,7 @@ public class YoukuPlayerActivity extends BaseActivity {
             handler.proceed();
             super.onReceivedSslError(view, handler, error);
         }
+
     }
 
     @Override
@@ -356,15 +419,23 @@ public class YoukuPlayerActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (layoutWeb.getVisibility() == View.VISIBLE) {
-            if (webview.canGoBack()) {
-                webview.goBack();
-            } else {
-                finish();
-            }
+//        if (layoutWeb.getVisibility() == View.VISIBLE) {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
-            finish();
+            if (getIntent().getStringExtra("url").endsWith(webView.getUrl().substring(webView.getUrl().lastIndexOf("/")))) {
+                finish();
+            } else {
+                if (webView.canGoBack()) {
+                    webView.goBack();
+                } else {
+                    finish();
+                }
+            }
         }
+//        } else {
+//            finish();
+//        }
     }
 }
 

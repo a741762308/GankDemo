@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/MyModule" />
             <option value="$PROJECT_DIR$/MyModule/YoukuPlayerOpenSDK" />
+            <option value="$PROJECT_DIR$/MyModule/bDIntegrationSDK" />
             <option value="$PROJECT_DIR$/MyModule/sharemodule" />
             <option value="$PROJECT_DIR$/app" />
           </set>

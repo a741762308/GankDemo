@@ -54,6 +54,8 @@ import com.jsqix.dongqing.gank.utils.DateUtil;
 import com.jsqix.dongqing.gank.utils.MarketUtils;
 import com.jsqix.dongqing.gank.utils.StringUtils;
 import com.jsqix.dongqing.gank.utils.Utils;
+import com.qihoo.appstore.common.updatesdk.lib.UpdateHelper;
+import com.tencent.bugly.Bugly;
 
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import permissions.dispatcher.NeedsPermission;
@@ -111,21 +113,40 @@ public class MainActivity extends BaseActivity
         locateCity = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_city);
 
         replace(new HomeFragment());
-        initClick();
+        initView();
         if (!StringUtils.isEmpty(aCache.getAsString("city"))) {
             getWeather();
             locateCity.setText(aCache.getAsString("city"));
         }
         MainActivityPermissionsDispatcher.onAllowWithCheck(this);
+        checkUpdate();
+    }
+
+    private void checkUpdate() {
+        if ("baidu".equalsIgnoreCase(BuildConfig.FLAVOR)) {
+//            BDAutoUpdateSDK.uiUpdateAction(mContext, new UICheckUpdateCallback() {
+//                @Override
+//                public void onCheckComplete() {
+//
+//                }
+//            });
+        } else if ("qh360".equalsIgnoreCase(BuildConfig.FLAVOR)) {
+            UpdateHelper.getInstance().init(mContext, android.R.attr.colorPrimary);
+            UpdateHelper.getInstance().manualUpdate(getPackageName());
+
+        } else if ("tencent".equalsIgnoreCase(BuildConfig.FLAVOR)) {
+            Bugly.init(getApplicationContext(), "8890450131", false);
+        } else {
+
+        }
     }
 
     private void initLocate() {
         mLocationOption = new AMapLocationClientOption();
         mLocationOption.setLocationMode(AMapLocationMode.Hight_Accuracy);
-        mLocationOption.setInterval(10*60*1000);
+        mLocationOption.setInterval(10 * 60 * 1000);
         mLocationClient = new AMapLocationClient(mContext);
         mLocationClient.setLocationOption(mLocationOption);
-        mLocationClient.startLocation();
         mLocationClient.setLocationListener(new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation aMapLocation) {
@@ -143,6 +164,10 @@ public class MainActivity extends BaseActivity
                 }
             }
         });
+    }
+
+    private void startLocate() {
+        mLocationClient.startLocation();
     }
 
     private void getWeather() {
@@ -219,11 +244,12 @@ public class MainActivity extends BaseActivity
                 });
     }
 
-    private void initClick() {
+    private void initView() {
         TextView set = (TextView) findViewById(R.id.btn_set);
         TextView theme = (TextView) findViewById(R.id.btn_theme);
         set.setOnClickListener(this);
         theme.setOnClickListener(this);
+        initLocate();
     }
 
 
@@ -494,7 +520,7 @@ public class MainActivity extends BaseActivity
 
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
     void onAllow() {
-        initLocate();
+        startLocate();
     }
 
     @Override

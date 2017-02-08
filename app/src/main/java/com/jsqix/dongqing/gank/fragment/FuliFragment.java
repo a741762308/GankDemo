@@ -1,6 +1,6 @@
 package com.jsqix.dongqing.gank.fragment;
 
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -35,7 +35,7 @@ public class FuliFragment extends RefreshFragment {
 
     @Override
     protected void initView() {
-        GridLayoutManager manager = new GridLayoutManager(mContext, 2,GridLayoutManager.VERTICAL,false);
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
         adapter = new RecyclerFuliAdapter(mContext, R.layout.item_recycler_fuli, data);
         recyclerView.setAdapter(adapter);

@@ -131,7 +131,24 @@ public class AboutActivity extends BaseActivity {
                 startActivity(intent);
             }
         }, 531, 579, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+        span.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mContext,WebViewActivity.class);
+                intent.putExtra("name","董庆的博客");
+                intent.putExtra("url","http://dongqing.website");
+                startActivity(intent);
+            }
+        },span.length()-14,span.length()-11,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        span.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mContext,WebViewActivity.class);
+                intent.putExtra("name","董庆的Github");
+                intent.putExtra("url","https://github.com/a741762308");
+                startActivity(intent);
+            }
+        },span.length()-6,span.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textAbout.setText(span);
         textAbout.setMovementMethod(LinkMovementMethod.getInstance());
 

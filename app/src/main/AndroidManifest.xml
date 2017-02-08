@@ -72,7 +72,55 @@
         <meta-data
             android:name="app_key"
             android:value="655690f8143987c6" />
+        <!--百度市场 start-->
+        <meta-data
+            android:name="BDAPPID"
+            android:value="9095740" />
+        <meta-data
+            android:name="BDAPPKEY"
+            android:value="OfGyuqidZpSGwW4NhoCg4Bhk31F3jQRU" />
 
+        <!--<activity-->
+            <!--android:name="com.baidu.autoupdatesdk.ConfirmDialoigActivity"-->
+            <!--android:exported="false"-->
+            <!--android:screenOrientation="sensor"-->
+            <!--android:theme="@style/bdp_update_dialog_style_fullscreen" />-->
+        <!--<receiver-->
+            <!--android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"-->
+            <!--android:exported="false">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.baidu.autoupdatesdk.ACTION_NEW_UPDATE" />-->
+                <!--<action android:name="com.baidu.autoupdatesdk.ACTION_DOWNLOAD_COMPLETE" />-->
+                <!--<action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS" />-->
+                <!--<action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+        <!--百度市场 end-->
+        <!--360市场 start-->
+        <activity
+            android:name="com.qihoo.appstore.common.updatesdk.lib.UpdateTipDialogActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <service
+            android:name="com.qihoo.appstore.updatelib.CheckUpdateService"
+            android:exported="false" />
+        <!--360市场 end-->
+        <!--应用宝 start-->
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:theme="@android:style/Theme.Translucent" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.jsqix.dongqing.gank.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+        <!--应用宝 end-->
         <activity
             android:name=".WelcomeActivity"
             android:theme="@style/AppTheme.Translucent">
