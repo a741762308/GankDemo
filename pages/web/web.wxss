@@ -1,0 +1,6 @@
+/* pages/web/web.wxss */
+.container{
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}

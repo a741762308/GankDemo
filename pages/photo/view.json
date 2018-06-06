@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "zoomImgByView": "/component/zoomImgByView/zoomImgByView",
+    "navbar": "/component/navbar/navbar"
+  }
+}

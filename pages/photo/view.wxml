@@ -1,0 +1,8 @@
+<!--pages/photo/view.wxml-->
+
+<view style='display:flex;flex-direction:column'>
+  <navbar title='高清大图' style='width:100%' bind:tapEvent='backPage'></navbar>
+  <view bindtap='navigateBack' class='image'>
+    <zoomImgByView img_src="{{imgSrc}}" view_width="{{imageWidth}}" view_height="{{imageHeight}}" />
+  </view>
+</view>

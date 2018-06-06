@@ -1,0 +1,17 @@
+/* pages/photo/view.wxss */
+
+page, .page {
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+}

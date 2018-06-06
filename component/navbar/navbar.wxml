@@ -1,0 +1,5 @@
+<!--component/navbar/navbar.wxml-->
+<view class='container'>
+  <image src='{{icon}}' catchtap='_tapEvent'mode='aspectFit' style='height:20px;width:20px;margin-right:10px'></image>
+  <text>{{title}}</text>
+</view>

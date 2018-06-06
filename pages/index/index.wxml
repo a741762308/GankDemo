@@ -1,0 +1,163 @@
+<wxs module="filter" src="../../utils/dateFormat.wxs" />
+
+<view class="page">
+  <!-- 侧滑栏 -->
+  <view class="page_tab" bindtouchstart='slideStart' bindtouchend='slideEnd'>
+    <view class='slide-top'>
+      <view style='display:flex;flex-direction:row;justify-content: space-between;width:70%'>
+        <view class='oval-logo'>
+          <image src='https://gank-1252135959.coscd.myqcloud.com/images/gank.png' mode='aspectFit'></image>
+        </view>
+        <view class='weather' style="display:flex;flex-direction:row">
+          <image src='{{weather_icon}}' mode="aspectFit" style='width:200rpx;height:200rpx' />
+          <view style="display:flex;flex-direction:column;margin-left:10rpx">
+            <text style='color:white;font-size:30rpx'>{{weather}}</text>
+            <text style='color:white;font-size:30rpx;margin-top:10rpx'>{{weather_temp}}</text>
+          </view>
+        </view>
+      </view>
+      <view style="display:flex;flex-direction:column;margin-left:30rpx;margin-right:30rpx">
+        <view style='display:flex;flex-direction:row;justify-content:space-between;width:70%;align-items:center'>
+          <text style="color:white;font-size:35rpx">干货Gank</text>
+          <view style='margin-right:10rpx'>
+            <image src='http://gank-1252135959.coscd.myqcloud.com/images/ic_locate.png' style='width:30rpx;height:30rpx' mode="aspectFit" />
+            <text style="color:white">{{city}}</text>
+          </view>
+        </view>
+
+        <text style="color:#c1c1c1;font-size:30rpx;margin-top:15rpx">每日分享妹子图与技术干货</text>
+      </view>
+    </view>
+    <view class='radio-group' wx:for="{{menu}}" wx:for-item="name" wx:for-index="id">
+      <view wx:if="{{name=='闲读'}}">
+        <navigator url='../web/web?url=https://gank.io/xiandu&&current={{currentMenu}}'>
+          <view data-current="{{id}}" bindtap="menuChange" class="radio-item {{currentMenu==id?'active':''}}">
+            <image src="{{currentMenu==id?menuIcon[id].checked:menuIcon[id].unchecked}}" mode='aspectFit' style='width:80rpx;height:80rpx'></image>
+            <text style='margin-left:40rpx'>{{name}}</text>
+          </view>
+        </navigator>
+      </view>
+      <view wx:else>
+        <view data-current="{{id}}" bindtap="menuChange" class="radio-item {{currentMenu==id?'active':''}}">
+          <image src="{{currentMenu==id?menuIcon[id].checked:menuIcon[id].unchecked}}" mode='aspectFit' style='width:80rpx;height:80rpx'></image>
+          <text style='margin-left:40rpx'>{{name}}</text>
+        </view>
+      </view>
+
+    </view>
+  </view>
+  <!-- 遮罩 -->
+  <view class="bg" bindtap='hideview' style='display:{{display}}'></view>
+  <!-- 主页 -->
+  <view class="home" style="{{translate}}">
+    <navbar id="navbar" title='干货Gank' icon='https://gank-1252135959.coscd.myqcloud.com/images/home.png' bind:tapEvent='showview'></navbar>
+    <view wx:if="{{currentMenu==1}}">
+      <!--小程序对webview的支持不是很友好，会自动全屏  -->
+      <!-- <web-view src='https://gank.io/xiandu'></web-view> -->
+    </view>
+    <view wx:else style='height:100%'>
+      <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
+        <block wx:for="{{titles[currentMenu]}}" wx:for-item="name" wx:for-index="id">
+          <view class="tab-item {{currentTab[currentMenu]==id?'active':''}}" data-current="{{id}}" bindtap="swichNav" style="width:{{titles[currentMenu].length>3?-1:clientWidth/titles[currentMenu].length-30}}px">{{name}}</view>
+        </block>
+      </scroll-view>
+      <swiper class="tab-content" current="{{currentTab[currentMenu]}}" duration="300" bindchange="switchTab">
+        <swiper-item wx:for="{{titles[currentMenu]}}" wx:for-item="name" style="background:#EEEEEE">
+          <scroll-view scroll-y="true" class="scoll-h" bindscrolltoupper="onRefresh" bindscrolltolower="onLoadMore">
+            <view wx:if="{{currentMenu==0}}">
+              <view wx:if="{{name=='推荐'}}">
+                <block wx:for="{{recommendBean}}" wx:for-item="data">
+                  <navigator url='../photo/view?url={{data["福利"][0].url}}'>
+                    <view style='width:100%;height:180px;position:relative'>
+                      <image src='{{data["福利"][0].url}}' style='width:100%;height:100%' mode='aspectFill'></image>
+                      <text style='position:absolute;right:0px;bottom:0px;color:#4675f9;margin-right:15rpx;margin-bottom:10rpx;font-size:20px'>{{filter.dateFormat(data["福利"][0].publishedAt)}}</text>
+                    </view>
+                  </navigator>
+                  <block wx:for="{{data}}" wx:for-item="child" wx:for-index="index">
+                    <view wx:if="{{index!='福利'}}">
+                      <view class="item-ans">
+                        <view class='content' style="color:#ff0000">{{index}}</view>
+                        <block wx:for="{{child}}" wx:for-item="item">
+                          <navigator url="../web/web?url={{item.url}}">
+                            <view class='content'>{{item.desc}}</view>
+                            <view wx:if="{{item.images.length>0}}">
+                              <image class='content' src="{{item.images[0]}}" mode='aspectFit'></image>
+                            </view>
+                          </navigator>
+                        </block>
+                      </view>
+                    </view>
+                  </block>
+                </block>
+              </view>
+              <view wx:elif="{{name =='福利'}}" class='fuli-view'>
+                <block wx:for="{{dataBean}}" wx:for-item="data" wx:for-index="key">
+                  <navigator url="../photo/view?url={{data.url}}">
+                    <view class='fuli'>
+                      <image class='fuli-image' id='{{key}}' src='{{data.url}}' bindload="imageLoad" style="height:{{minHeight[key]+'px'}}"></image>
+                    </view>
+                  </navigator>
+                </block>
+              </view>
+              <view wx:else>
+                <block wx:for="{{dataBean}}" wx:for-item="data">
+                  <navigator url="../web/web?url={{data.url}}">
+                    <view class="item-ans">
+                      <view class='content'>
+                        {{data.desc}}
+                      </view>
+                      <view class='mask'>
+                        <view class='font'>@author [{{data.who}}]</view>
+                        <view class='font'>{{filter.dateFormat(data.publishedAt)}}</view>
+                      </view>
+                    </view>
+                  </navigator>
+                </block>
+              </view>
+            </view>
+            <view wx:elif="{{currentMenu==2}}" class='fuli-view'>
+              <block wx:for="{{film}}" wx:for-item="data">
+                <navigator url='../web/web?url={{data.alt}}'>
+                  <view class='fuli'>
+                    <image class='fuli-image' src='{{data.images.large}}'></image>
+                    <!-- <label>导演</label>
+                      <text>{{data.directors[0].name}}</text>
+                      <label>上映日期</label>
+                      <view wx:for="{{data.pubdates}}" wx:for-item="date">
+                        <text>{{date}}</text>
+                      </view>
+                      <label>主演</label>
+                       <view wx:for="{{data.casts}}" wx:for-item="cast">
+                        <text>{{cast.name}}</text>
+                      </view>
+                      <label>评分</label>
+                      <text>{{data.rating.average}}</text> -->
+                  </view>
+                </navigator>
+              </block>
+            </view>
+            <view wx:elif="{{currentMenu==3}}" class='youku-view'>
+              <block wx:for="{{youku}}" wx:for-item="data">
+                <navigator url='../web/web?url={{data.play_link}}'>
+                  <view class='fuli'>
+                    <image class='fuli-image' src='{{data.poster}}' style="height:280rpx;"></image>
+                    <text style='text-overflow:ellipsis;overflow:hidden;white-space:nowrap;font-size:28rpx;margin-right:15rpx;'>{{data.name}}</text>
+                    <view style='display:flex;flex:direction:row;margin-top:15rpx;align-items:center;'>
+                      <label style='font-size:25rpx'>评分</label>
+                      <text style='margin-left:15rpx;font-size:36rpx;color:red;'>{{data.score}}</text>
+                    </view>
+                  </view>
+                </navigator>
+              </block>
+            </view>
+
+            <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+              <view class="weui-loading"></view>
+              <view class="weui-loadmore__tips">正在加载</view>
+            </view>
+          </scroll-view>
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+</view>

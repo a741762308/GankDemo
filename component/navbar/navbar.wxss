@@ -1,0 +1,12 @@
+/* component/navbar/navbar.wxss */
+
+.container {
+  height: 120rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 20rpx;
+  padding-left: 20rpx;
+  background-color: #4a93e2;
+  color: white;
+}

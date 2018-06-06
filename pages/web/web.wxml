@@ -1,0 +1,5 @@
+<!--pages/web/web.wxml-->
+<view style='display:flex;flex-direction:column'>
+  <navbar title='干货Gank'></navbar>
+  <web-view src="{{url}}" style></web-view>
+</view>

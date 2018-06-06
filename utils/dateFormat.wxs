@@ -1,0 +1,18 @@
+var filter = {
+  dateFormat: function (dateStr) {
+    var date = getDate(dateStr)
+    var year = date.getFullYear()
+    var month = date.getMonth() + 1
+    var day = date.getDate()
+    var format = [year, month, day].map(formatNumber).join('-')
+    return format
+  },
+}
+function formatNumber(n) {
+  n = n.toString()
+  return n[1] ? n : '0' + n
+}
+
+module.exports = {
+  dateFormat: filter.dateFormat,
+}
